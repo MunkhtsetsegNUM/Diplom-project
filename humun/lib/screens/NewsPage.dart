@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+
+class NewsPage extends StatefulWidget {
+  const NewsPage({super.key});
+
+  @override
+  State<NewsPage> createState() => _NewsPageState();
+}
+
+class _NewsPageState extends State<NewsPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(24),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    "assets/image/news.png",
+                    width: 100,
+                  )
+                ],
+              ),
+            ]
+          )
+        )
+      )
+    );
+  }
+}
