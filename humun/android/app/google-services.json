@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "103376559813",
+    "project_id": "personality-app-a75ca",
+    "storage_bucket": "personality-app-a75ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103376559813:android:03d9461ae97cbd07881aac",
+        "android_client_info": {
+          "package_name": "com.example.humun"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsauhU5n-j1-4z6fdsihgMopmIODDUBcY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

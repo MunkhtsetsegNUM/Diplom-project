@@ -7,6 +7,7 @@ import 'package:humun/models/personalityModel.dart';
 import 'package:humun/theme.dart';
 import 'package:http/http.dart' as http;
 import 'package:humun/widget/card_category.dart';
+import 'package:humun/widget/home_slider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -43,11 +44,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(24),
-          child: Column(
-            children: [
-              Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              padding: EdgeInsets.all(24),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -63,47 +65,74 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               ),
-              SizedBox(height: 24),
-              Container(
-                child: Column(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.asset(
-                        "assets/image/banner.png",
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 90,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: listCategory.length,
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.only(right: 8), 
-                    child: Material(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Container(
-                        height: 90,
-                        width: 70,
-                        decoration: BoxDecoration(
-                            color: mainColor,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: CardCatergory(
-                          imageCat: listCategory[index].image,
-                          nameCat: listCategory[index].name, 
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(height: 24),
+                      Container(
+                        child: Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.asset(
+                                "assets/image/banner.png",
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    )
-                    )
-                  ,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text("Зан чанарууд",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 6,),
+                      SizedBox(height: 100,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: listCategory.length,
+                          itemBuilder: (context, index) => Padding(
+                            padding: const EdgeInsets.only(right: 8), 
+                            child: CardCatergory(
+                                  imageCat: listCategory[index].image,
+                                  nameCat: listCategory[index].name, 
+                                
+                            )
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text("Мэдлэг",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 6,),
+                      NewsSlider()
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
+
 }

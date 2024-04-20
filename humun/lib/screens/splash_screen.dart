@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:humun/screens/LoginPage.dart';
-import 'package:humun/screens/Register/RegisterPage.dart';
+import 'package:humun/screens/QuestionPage.dart';
 import 'package:humun/widget/button_primary.dart';
 import 'package:humun/widget/general_logo_space.dart';
 
@@ -40,7 +40,7 @@ class SplashScreen extends StatelessWidget {
             ButtonPrimary(
               text: "Тест өгөх", 
               onPressed: (){
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>RegisterPageUsername()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>QuestionPage()));
               },
             ),
           ]  

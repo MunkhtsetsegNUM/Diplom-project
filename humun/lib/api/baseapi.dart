@@ -4,4 +4,5 @@ class BASEURL{
   static String ipLogin = "http://$ipAddress/personalityapp/login.php";
   static String ipCategory = "http://$ipAddress/personalityapp/personality_cate.php";
   static String ipDiary = "http://$ipAddress/personalityapp/set_diary.php";
+  static String ipQuestions = "http://$ipAddress/personalityapp/get_questions.php";
 }
