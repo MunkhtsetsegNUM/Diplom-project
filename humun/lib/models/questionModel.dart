@@ -1,6 +1,6 @@
 class Question {
   final String question;
-  final int id;
+  final String id;
 
   Question({
     required this.question,
@@ -10,7 +10,7 @@ class Question {
   factory Question.fromJSON(Map<String, dynamic> data) {
     return Question(
       question: data['question'] ?? '',
-      id: data['ID'] != null ? int.parse(data['ID'].toString()) : 0,
+      id: data['ID'],
     );
   }
 }

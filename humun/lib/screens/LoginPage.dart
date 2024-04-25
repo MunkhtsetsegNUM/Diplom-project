@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:humun/api/baseapi.dart';
 import 'package:humun/screens/MainPage.dart';
 import 'package:humun/screens/Register/RegisterPage.dart';
+import 'package:humun/screens/splash_screen.dart';
 import 'package:humun/theme.dart';
 import 'package:humun/widget/button_primary.dart';
 import 'package:humun/widget/general_logo_space.dart';
@@ -56,6 +57,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: BackButton(
+          onPressed: () {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SplashScreen()));
+          },
+        ),
+      ),
       body: ListView(
         children:[ Container(
       padding: EdgeInsets.all(24),
