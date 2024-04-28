@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:humun/screens/LoginPage.dart';
 import 'package:humun/screens/QuestionPage.dart';
+import 'package:humun/screens/TestResultPage.dart';
 import 'package:humun/widget/button_primary.dart';
 import 'package:humun/widget/general_logo_space.dart';
 

@@ -39,7 +39,7 @@ class _NewsSliderState extends State<NewsSlider> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 330,
+      height: 250,
       child: PageView.builder(
         onPageChanged: (value){
           setState(() {

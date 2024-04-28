@@ -92,12 +92,13 @@ class _HomePageState extends State<HomePage> {
                           Text("Зан чанарууд",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
+                            fontSize: 17
                           ),
                           ),
                         ],
                       ),
                       SizedBox(height: 6,),
-                      SizedBox(height: 100,
+                      SizedBox(height: 150,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: listCategory.length,
@@ -111,13 +112,13 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text("Мэдлэг",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
+                            fontSize: 17
                           ),
                           ),
                         ],

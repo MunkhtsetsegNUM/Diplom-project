@@ -10,8 +10,14 @@ class PersonalityModel {
   }
 
   Future<void> _initializeInterpreter(String modelPath) async {
-    _interpreter = await Interpreter.fromAsset(modelPath);
-    _isInterpreterInitialized = true;
+    try {
+      _interpreter = await Interpreter.fromAsset(modelPath);
+      _isInterpreterInitialized = true;
+    } catch (e) {
+      print("Error initializing interpreter: $e");
+      _isInterpreterInitialized = false;
+      throw Exception("Failed to initialize interpreter: $e");
+    }
   }
 
   Future<List<double>> predict(List<double> input) async {
@@ -19,21 +25,29 @@ class PersonalityModel {
       throw Exception("Interpreter is not initialized.");
     }
 
-    final inputBuffer = Float32List.fromList(input);
-    final inputs = [inputBuffer];
+    List<double> processedInput = _preprocessInput(input);
+    Float32List inputBuffer = Float32List.fromList(processedInput);
+    Float32List outputBuffer = Float32List(16);
+    
+    try {
+      _interpreter.run([inputBuffer], [outputBuffer]);
+    } catch (e) {
+      print("Error running interpreter: $e");
+      throw Exception("Failed to run interpreter: $e");
+    }
 
-    final outputs = <ByteBuffer>[];
-    final outputBuffer = Float32List(16).buffer;
-    outputs.add(outputBuffer);
-
-    _interpreter.run(inputs, outputs);
-
-    final List<double> outputList = Float32List.view(outputBuffer).toList();
-
-    return outputList;
+    return outputBuffer.toList();
   }
+
+  List<double> _preprocessInput(List<double> input) {
+    List<double> normalizedInput = input.map((e) => e / 255.0).toList();
+    List<double> reshapedInput = normalizedInput.expand((e) => [e, 1.0]).toList();
+    return reshapedInput;
+  }
+  
 
   void close() {
     _interpreter.close();
   }
+
 }

@@ -57,12 +57,20 @@ class HomeNewsSlider extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
+                    Row(
+                    children: [
+                      Icon(Icons.person, size: 18.0, color: whiteColor,),
+                      
+                      SizedBox(width: 4.0),
+                      Text(
                       author,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: Colors.white,
                       ),
                     ),
+                    ],
+                  ),
+                    
                     const SizedBox(height: 5,),
                     Text(
                       title,

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:humun/api/baseapi.dart';
 import 'package:humun/models/blogModel.dart';
+import 'package:humun/widget/dairy_widget.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -199,8 +200,9 @@ Widget build(BuildContext context) {
                   children: [
                     Column(
                       children: [
-                        Text('hi'),Text('hi'),Text('hi'),Text('hi'),Text('hi'),Text('hi'),Text('hi'),Text('hi'),Text('hi'),Text('hi'),Text('hi'),Text('hi'),Text('hi'),Text('hi'),Text('hi'),Text('hi'),Text('hi'),
-                      ],
+                        DairyWidget(),
+                        SizedBox(height: 8,),
+                        ],
                     )
                   ],
                 ),

@@ -41,7 +41,7 @@ class HomeNewsSlider extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   SizedBox(height: 4.0),
                   Row(
@@ -50,7 +50,7 @@ class HomeNewsSlider extends StatelessWidget {
                       SizedBox(width: 4.0),
                       Text(
                         author,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: TextStyle( fontWeight: FontWeight.bold,)
                       ),
                     ],
                   ),
@@ -61,7 +61,7 @@ class HomeNewsSlider extends StatelessWidget {
                       SizedBox(width: 4.0),
                       Text(
                         publishedAt,
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
                   ),

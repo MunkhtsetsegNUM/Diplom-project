@@ -64,4 +64,7 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation 'org.tensorflow:tensorflow-lite-select-tf-ops:0.0.0-nightly'
+
+}

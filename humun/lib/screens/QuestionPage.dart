@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:humun/api/baseapi.dart';
@@ -8,6 +9,9 @@ import 'package:humun/screens/TestResultPage.dart';
 import 'package:humun/screens/loadingScreen.dart';
 import 'package:humun/screens/splash_screen.dart';
 import 'package:humun/widget/question_card.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:typed_data';
 
 class QuestionPage extends StatefulWidget {
   const QuestionPage({Key? key}) : super(key: key);
@@ -21,24 +25,51 @@ class _QuestionPageState extends State<QuestionPage> {
   int currentPage = 0;
   int questionsPerPage = 5;
   List<Map<String, dynamic>> selectedAnswers = [];
-  late PersonalityModel personalityModel;
+  Interpreter? _interpreter;
+  List<String> characters = ['ENFP', 'ISFP', 'INFJ', 'ISTP', 'ENFJ', 'INTJ', 'ENTI', 'ESFP', 'INFP', 'INTP', 'ISTI', 'ENTP', 'ISFJ', 'ESTI', 'ESTP', 'ESFJ'];
+  List<double> X_test_custom = [
+    0, 0, -1, 0, 2, 0, 1, 0, 1, 0, 0, -2, 2, -2, 1, -1, -2, 1, 2, 2, 0, -1, 0, 0, 0, -2, -2, 0, 1, -1, 
+    0, 0, 2, 0, -1, 0, -3, 0, 2, -1, -1, -3, 0, -2, -2, 0, -2, 0, 1, 0, 0, 0, 0, 0, -1, -1, 0, -2, 0, 1
+  ];
+
+
 
   @override
   void initState() {
     super.initState();
     fetchQuestions();
-    personalityModel = PersonalityModel(modelPath: 'assets/model.tflite');
+    loadModel();
   }
-  @override
-  void dispose() {
-    personalityModel.close(); 
-    super.dispose();
+
+  Future<void> loadModel() async {
+    try {
+      final ByteData modelData = await rootBundle.load('assets/model.tflite');
+      final Uint8List modelBytes = modelData.buffer.asUint8List();
+      _interpreter = Interpreter.fromBuffer(modelBytes);
+      print('Model loaded successfully');
+    } catch (e) {
+      print('Error loading TensorFlow Lite model: $e');
+    }
+  }
+
+
+
+  String predictCharacter(List<double> inputData) {
+    var input = [inputData];
+    var input64 = Float64List.fromList(input.expand((e) => e).toList());
+    print(input64);
+    var output = List<double>.filled(characters.length, 0);
+    print(output);
+    _interpreter?.run(input64, output);
+    var predictedIndex = output.indexOf(output.reduce((curr, next) => curr > next ? curr : next));
+    print(characters[predictedIndex]);
+    return characters[predictedIndex];
   }
 
   fetchQuestions() async {
     questions.clear();
     var urlQuestions = Uri.parse(BASEURL.ipQuestions);
-    final response = await http.get(urlQuestions);
+    final response = await http.get(urlQuestions, );
 
     if (response.statusCode == 200) {
       setState(() {
@@ -48,6 +79,8 @@ class _QuestionPageState extends State<QuestionPage> {
         }
         selectedAnswers = List.generate(questions.length, (index) => {'id': questions[index].id, 'index': -1});
       });
+    }else{
+      print('Request failed with status: ${response.statusCode}');
     }
   }
 
@@ -72,111 +105,67 @@ class _QuestionPageState extends State<QuestionPage> {
     int answerIndex = selectedAnswers.indexWhere((answer) => answer['id'] == questionId);
     if (answerIndex != -1) {
       selectedAnswers[answerIndex]['index'] = index;
-    }
-  });
-}
-
-void showFinishConfirmationDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text("Тест дуусгах"),
-        content: Text("Та тестийг дуусгахдаа итгэлтэй байна уу?"),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-            child: Text("No"),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-            child: Text("Yes"),
-          ),
-        ],
-      );
-    },
-  ).then((value) {
-    if (value != null && value) {
-      finishQuiz();
-    }
-  });
-}
-
-void showIncompleteQuestionsDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text("Бүх асуултандаа хариулна уу!"),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Close the dialog
-            },
-            child: Text("OK"),
-          ),
-        ],
-      );
-    },
-  );
-}
-
-Future<bool> sendAnswersToServer(List<Map<String, dynamic>> answers) async {
-  // Assuming you have an API endpoint to send answers
-  var url = Uri.parse('YOUR_API_ENDPOINT');
-  var response = await http.post(
-    url,
-    body: jsonEncode(answers),
-    headers: {'Content-Type': 'application/json'},
-  );
-  if (response.statusCode == 200) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-
-  Future<void> finishQuiz() async {
-  // Collect selected answers indices in order
-  List<int> selectedIndices = [];
-  for (var answer in selectedAnswers) {
-    if (answer['index'] != -1) {
-      selectedIndices.add(answer['index']);
+      printSelectedAnswers();
     } else {
-      // If any question is unanswered, show dialog and return
-      showIncompleteQuestionsDialog(context);
-      return;
+      selectedAnswers.add({'id': questionId, 'index': index});
     }
-  }
-
-  // Convert selected indices to doubles (required input format)
-  List<double> input = selectedIndices.map((index) => index.toDouble()).toList();
-
-  try {
-    List<double> prediction = await personalityModel.predict(input);
-    String personalityType = _getPersonalityType(prediction);
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => ResultPage(personalityType: personalityType)),
-    );
-  } catch (e) {
-    print('Prediction error: $e');
-  }
+    
+  });
 }
 
-  String _getPersonalityType(List<double> prediction) {
-    // Assuming prediction has 16 values corresponding to personality types
-    // You can customize this logic based on how your model outputs results
-    int maxIndex = prediction.indexOf(prediction.reduce((curr, next) => curr > next ? curr : next));
-    List<String> personalityTypes = ['ESTJ', 'ENTJ', 'ESFJ', 'ENFJ', 'ISTJ', 'ISFJ', 'INTJ', 'INFJ',
-      'ESTP', 'ESFP', 'ENTP', 'ENFP', 'ISTP', 'ISFP', 'INTP', 'INFP'];
-    return personalityTypes[maxIndex];
+
+  void showFinishConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Тест дуусгах"),
+          content: Text("Та тестийг дуусгахдаа итгэлтэй байна уу?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: Text("No"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: Text("Yes"),
+            ),
+          ],
+        );
+      },
+    ).then((value) {
+      if (value != null && value) {
+        var predictedCharacter = predictCharacter(X_test_custom);
+        print('Predicted Character: $predictedCharacter');
+      }
+    });
   }
+
+  void showIncompleteQuestionsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Бүх асуултандаа хариулна уу!"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); 
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+  void printSelectedAnswers() {
+  print(selectedAnswers);
+}
 
   @override
   Widget build(BuildContext context) {
@@ -227,15 +216,15 @@ Future<bool> sendAnswersToServer(List<Map<String, dynamic>> answers) async {
                   child: ElevatedButton(
                     onPressed: (){
                       if (currentPage == (questions.length / questionsPerPage).ceil() - 1) {
-                      bool allQuestionsAnswered = selectedAnswers.every((answer) => answer['index'] != -1);
-                      if (allQuestionsAnswered) {
-                        showFinishConfirmationDialog(context);
+                        bool allQuestionsAnswered = selectedAnswers.every((answer) => answer['index'] != -1);
+                        if (allQuestionsAnswered) {
+                          showFinishConfirmationDialog(context);
+                        } else {
+                          showIncompleteQuestionsDialog(context);
+                        }
                       } else {
-                        showIncompleteQuestionsDialog(context);
+                        nextPage();
                       }
-                    } else {
-                      nextPage();
-                    }
                     },
                     child: Text('Үргэлжлүүлэх'),
                   ),
@@ -255,5 +244,10 @@ Future<bool> sendAnswersToServer(List<Map<String, dynamic>> answers) async {
       }
     }
     return -1;
+  }
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<Interpreter>('_interpreter', _interpreter));
   }
 }
