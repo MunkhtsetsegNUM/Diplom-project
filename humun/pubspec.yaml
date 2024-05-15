@@ -46,3 +46,4 @@ flutter:
     - assets/data/news.json
     - assets/image/profile.png
     - assets/model.tflite
+    - assets/myPersonalityModel.tflite

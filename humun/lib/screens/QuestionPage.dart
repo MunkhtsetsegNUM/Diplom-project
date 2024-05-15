@@ -25,11 +25,10 @@ class _QuestionPageState extends State<QuestionPage> {
   int currentPage = 0;
   int questionsPerPage = 5;
   List<Map<String, dynamic>> selectedAnswers = [];
-  Interpreter? _interpreter;
   List<String> characters = ['ENFP', 'ISFP', 'INFJ', 'ISTP', 'ENFJ', 'INTJ', 'ENTI', 'ESFP', 'INFP', 'INTP', 'ISTI', 'ENTP', 'ISFJ', 'ESTI', 'ESTP', 'ESFJ'];
-  List<double> X_test_custom = [
-    0, 0, -1, 0, 2, 0, 1, 0, 1, 0, 0, -2, 2, -2, 1, -1, -2, 1, 2, 2, 0, -1, 0, 0, 0, -2, -2, 0, 1, -1, 
-    0, 0, 2, 0, -1, 0, -3, 0, 2, -1, -1, -3, 0, -2, -2, 0, -2, 0, 1, 0, 0, 0, 0, 0, -1, -1, 0, -2, 0, 1
+  List<int> X_test_custom = [
+    0,0,2,-1,-1,2,-1,0,2,0,0,1,0,-1,1,0,0,-1,1,0,0,2,0,-1,0,-1,2,0,2,0,
+    0,0,1,0,-1,1,0,2,0,-2,-2,1,1,1,1,0,1,0,1,-1,0,0,-1,0,1,0,0,1,-1,2
   ];
 
 
@@ -43,27 +42,48 @@ class _QuestionPageState extends State<QuestionPage> {
 
   Future<void> loadModel() async {
     try {
-      final ByteData modelData = await rootBundle.load('assets/model.tflite');
-      final Uint8List modelBytes = modelData.buffer.asUint8List();
-      _interpreter = Interpreter.fromBuffer(modelBytes);
-      print('Model loaded successfully');
+      final interpreter = await Interpreter.fromAsset('assets/myPersonalityModel.tflite');
+      print('Model loaded');
     } catch (e) {
-      print('Error loading TensorFlow Lite model: $e');
+      print('Error: $e');
+    }
+  }
+  List<int> padSequences(List<int> inputData, int maxLen) {
+    if (inputData.length >= maxLen) {
+      return inputData.sublist(0, maxLen);
+    } else {
+      return List<int>.filled(maxLen - inputData.length, 0)..setAll(0, inputData);
     }
   }
 
 
+  Future<String> predictCharacter(List<int> inputData) async {
+    final interpreter = await Interpreter.fromAsset('assets/myPersonalityModel.tflite');
+    final isolateInterpreter =
+        await IsolateInterpreter.create(address: interpreter.address);
+    if (inputData.isEmpty) {
+      return 'Input data is empty';
+    }
+    if (interpreter == null) {
+      return 'Model not loaded';
+    }
 
-  String predictCharacter(List<double> inputData) {
-    var input = [inputData];
-    var input64 = Float64List.fromList(input.expand((e) => e).toList());
-    print(input64);
-    var output = List<double>.filled(characters.length, 0);
-    print(output);
-    _interpreter?.run(input64, output);
-    var predictedIndex = output.indexOf(output.reduce((curr, next) => curr > next ? curr : next));
-    print(characters[predictedIndex]);
-    return characters[predictedIndex];
+    final paddedInput = padSequences(inputData, 60);
+    final input = paddedInput.map((e) => e.toDouble()).toList();
+
+    var inputBuffer = Float32List.fromList(input);
+
+    var outputBuffer = List<double>.filled(1, 0);
+
+    try {
+      isolateInterpreter.run(inputBuffer, outputBuffer);
+      print(outputBuffer);
+      final predictedIndex = outputBuffer[0].toInt();
+      return characters[predictedIndex];
+    } catch (e) {
+      print('Error: $e');
+      return "Prediction failed";
+    }
   }
 
   fetchQuestions() async {
@@ -216,7 +236,7 @@ class _QuestionPageState extends State<QuestionPage> {
                   child: ElevatedButton(
                     onPressed: (){
                       if (currentPage == (questions.length / questionsPerPage).ceil() - 1) {
-                        bool allQuestionsAnswered = selectedAnswers.every((answer) => answer['index'] != -1);
+                        bool allQuestionsAnswered = selectedAnswers.every((answer) => answer['index'] != -2);
                         if (allQuestionsAnswered) {
                           showFinishConfirmationDialog(context);
                         } else {
@@ -244,10 +264,5 @@ class _QuestionPageState extends State<QuestionPage> {
       }
     }
     return -1;
-  }
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<Interpreter>('_interpreter', _interpreter));
   }
 }
