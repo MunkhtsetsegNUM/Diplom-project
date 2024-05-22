@@ -1,0 +1,14 @@
+# Target labels
+ xnnpack-populate
+# Source files and their labels
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/xnnpack-subbuild/CMakeFiles/xnnpack-populate
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/xnnpack-subbuild/CMakeFiles/xnnpack-populate.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/xnnpack-subbuild/CMakeFiles/xnnpack-populate-complete.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-build.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-configure.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-download.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-install.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-mkdir.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-patch.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-test.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-update.rule

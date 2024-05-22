@@ -1,0 +1,14 @@
+# Target labels
+ gemmlowp-populate
+# Source files and their labels
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/gemmlowp-subbuild/CMakeFiles/gemmlowp-populate
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/gemmlowp-subbuild/CMakeFiles/gemmlowp-populate.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/gemmlowp-subbuild/CMakeFiles/gemmlowp-populate-complete.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/gemmlowp-subbuild/gemmlowp-populate-prefix/src/gemmlowp-populate-stamp/gemmlowp-populate-build.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/gemmlowp-subbuild/gemmlowp-populate-prefix/src/gemmlowp-populate-stamp/gemmlowp-populate-configure.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/gemmlowp-subbuild/gemmlowp-populate-prefix/src/gemmlowp-populate-stamp/gemmlowp-populate-download.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/gemmlowp-subbuild/gemmlowp-populate-prefix/src/gemmlowp-populate-stamp/gemmlowp-populate-install.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/gemmlowp-subbuild/gemmlowp-populate-prefix/src/gemmlowp-populate-stamp/gemmlowp-populate-mkdir.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/gemmlowp-subbuild/gemmlowp-populate-prefix/src/gemmlowp-populate-stamp/gemmlowp-populate-patch.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/gemmlowp-subbuild/gemmlowp-populate-prefix/src/gemmlowp-populate-stamp/gemmlowp-populate-test.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/gemmlowp-subbuild/gemmlowp-populate-prefix/src/gemmlowp-populate-stamp/gemmlowp-populate-update.rule

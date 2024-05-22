@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-# platform :ios, '12.0'
+ platform :ios, '12.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -35,6 +35,11 @@ target 'Runner' do
   target 'RunnerTests' do
     inherit! :search_paths
   end
+
+  pod 'TensorFlowLiteSwift', '2.12.0'
+  pod 'TensorFlowLiteSelectTfOps', '0.0.1-nightly.20240514'
+
+
 end
 
 post_install do |installer|
@@ -42,7 +47,9 @@ post_install do |installer|
     project.targets.each do |target|
         target.build_configurations.each do |config|
             config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
-         end
+            config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
+            other_ldflags = config.build_settings['OTHER_LDFLAGS'] || '$(inherited)'
+     end
     end
   end
   installer.pods_project.targets.each do |target|

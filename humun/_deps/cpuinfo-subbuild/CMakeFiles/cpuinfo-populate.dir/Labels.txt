@@ -1,0 +1,14 @@
+# Target labels
+ cpuinfo-populate
+# Source files and their labels
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/cpuinfo-subbuild/CMakeFiles/cpuinfo-populate
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/cpuinfo-subbuild/CMakeFiles/cpuinfo-populate.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/cpuinfo-subbuild/CMakeFiles/cpuinfo-populate-complete.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/cpuinfo-subbuild/cpuinfo-populate-prefix/src/cpuinfo-populate-stamp/cpuinfo-populate-build.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/cpuinfo-subbuild/cpuinfo-populate-prefix/src/cpuinfo-populate-stamp/cpuinfo-populate-configure.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/cpuinfo-subbuild/cpuinfo-populate-prefix/src/cpuinfo-populate-stamp/cpuinfo-populate-download.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/cpuinfo-subbuild/cpuinfo-populate-prefix/src/cpuinfo-populate-stamp/cpuinfo-populate-install.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/cpuinfo-subbuild/cpuinfo-populate-prefix/src/cpuinfo-populate-stamp/cpuinfo-populate-mkdir.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/cpuinfo-subbuild/cpuinfo-populate-prefix/src/cpuinfo-populate-stamp/cpuinfo-populate-patch.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/cpuinfo-subbuild/cpuinfo-populate-prefix/src/cpuinfo-populate-stamp/cpuinfo-populate-test.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/cpuinfo-subbuild/cpuinfo-populate-prefix/src/cpuinfo-populate-stamp/cpuinfo-populate-update.rule

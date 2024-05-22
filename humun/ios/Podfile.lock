@@ -10,6 +10,7 @@ PODS:
     - TensorFlowLiteC/Core
   - TensorFlowLiteC/Metal (2.12.0):
     - TensorFlowLiteC/Core
+  - TensorFlowLiteSelectTfOps (0.0.1-nightly.20240514)
   - TensorFlowLiteSwift (2.12.0):
     - TensorFlowLiteSwift/Core (= 2.12.0)
   - TensorFlowLiteSwift/Core (2.12.0):
@@ -29,11 +30,14 @@ PODS:
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - TensorFlowLiteSelectTfOps (= 0.0.1-nightly.20240514)
+  - TensorFlowLiteSwift (= 2.12.0)
   - tflite_flutter (from `.symlinks/plugins/tflite_flutter/ios`)
 
 SPEC REPOS:
   trunk:
     - TensorFlowLiteC
+    - TensorFlowLiteSelectTfOps
     - TensorFlowLiteSwift
 
 EXTERNAL SOURCES:
@@ -48,9 +52,10 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   TensorFlowLiteC: 20785a69299185a379ba9852b6625f00afd7984a
+  TensorFlowLiteSelectTfOps: 90f2ec77ffea2e0b4cb5afec1db0dc0eeefc4ead
   TensorFlowLiteSwift: 3a4928286e9e35bdd3e17970f48e53c80d25e793
   tflite_flutter: 9433d086a3060431bbc9f3c7c20d017db0e72d08
 
-PODFILE CHECKSUM: 0b308d162a09d8f793ba95c13fdefd7d8501d96f
+PODFILE CHECKSUM: 339a09d154a49ef946e071176dac1cf26fe04b54
 
 COCOAPODS: 1.15.2

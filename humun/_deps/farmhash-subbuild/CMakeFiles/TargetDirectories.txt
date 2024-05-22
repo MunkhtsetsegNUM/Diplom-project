@@ -1,0 +1,3 @@
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/farmhash-subbuild/CMakeFiles/farmhash-populate.dir
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/farmhash-subbuild/CMakeFiles/edit_cache.dir
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/farmhash-subbuild/CMakeFiles/rebuild_cache.dir

@@ -9,9 +9,11 @@ import 'package:humun/screens/TestResultPage.dart';
 import 'package:humun/screens/loadingScreen.dart';
 import 'package:humun/screens/splash_screen.dart';
 import 'package:humun/widget/question_card.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
+
+import 'package:tflite_flutter/tflite_flutter.dart';
 
 class QuestionPage extends StatefulWidget {
   const QuestionPage({Key? key}) : super(key: key);
@@ -24,11 +26,12 @@ class _QuestionPageState extends State<QuestionPage> {
   List<Question> questions = [];
   int currentPage = 0;
   int questionsPerPage = 5;
+  Interpreter? interpreter;
+  final InterpreterOptions options = InterpreterOptions();
   List<Map<String, dynamic>> selectedAnswers = [];
   List<String> characters = ['ENFP', 'ISFP', 'INFJ', 'ISTP', 'ENFJ', 'INTJ', 'ENTI', 'ESFP', 'INFP', 'INTP', 'ISTI', 'ENTP', 'ISFJ', 'ESTI', 'ESTP', 'ESFJ'];
   List<int> X_test_custom = [
-    0,0,2,-1,-1,2,-1,0,2,0,0,1,0,-1,1,0,0,-1,1,0,0,2,0,-1,0,-1,2,0,2,0,
-    0,0,1,0,-1,1,0,2,0,-2,-2,1,1,1,1,0,1,0,1,-1,0,0,-1,0,1,0,0,1,-1,2
+    0,0,-1,3,-1,-2,-2,0,-1,0,2,1,0,1,3,2,2,0,-2,-3,0,2,0,0,-1,0,2,0,0,1,1,0,0,0,2,1,1,0,2,0,-1,1,1,3,-2,1,2,0,0,0,0,0,2,0,2,0,-1,1,-1,0
   ];
 
 
@@ -37,17 +40,9 @@ class _QuestionPageState extends State<QuestionPage> {
   void initState() {
     super.initState();
     fetchQuestions();
-    loadModel();
   }
 
-  Future<void> loadModel() async {
-    try {
-      final interpreter = await Interpreter.fromAsset('assets/myPersonalityModel.tflite');
-      print('Model loaded');
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
+
   List<int> padSequences(List<int> inputData, int maxLen) {
     if (inputData.length >= maxLen) {
       return inputData.sublist(0, maxLen);
@@ -61,22 +56,24 @@ class _QuestionPageState extends State<QuestionPage> {
     final interpreter = await Interpreter.fromAsset('assets/myPersonalityModel.tflite');
     final isolateInterpreter =
         await IsolateInterpreter.create(address: interpreter.address);
-    if (inputData.isEmpty) {
-      return 'Input data is empty';
-    }
-    if (interpreter == null) {
-      return 'Model not loaded';
-    }
-
-    final paddedInput = padSequences(inputData, 60);
-    final input = paddedInput.map((e) => e.toDouble()).toList();
-
-    var inputBuffer = Float32List.fromList(input);
-
-    var outputBuffer = List<double>.filled(1, 0);
-
     try {
+      if (inputData.isEmpty) {
+        return 'Input data is empty';
+      }
+
+      if (isolateInterpreter == null) {
+        return 'Model not loaded';
+      }
+
+      final paddedInput = padSequences(inputData, 59);
+      final input = paddedInput.map((e) => e.toDouble()).toList();
+
+      var inputBuffer = Float32List.fromList(input);
+      var outputBuffer = List<double>.filled(1, 0);
+      await Future.delayed(const Duration(seconds: 1));
+
       isolateInterpreter.run(inputBuffer, outputBuffer);
+
       print(outputBuffer);
       final predictedIndex = outputBuffer[0].toInt();
       return characters[predictedIndex];
@@ -134,7 +131,7 @@ class _QuestionPageState extends State<QuestionPage> {
 }
 
 
-  void showFinishConfirmationDialog(BuildContext context) {
+  void showFinishConfirmationDialog(BuildContext context) async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -146,46 +143,43 @@ class _QuestionPageState extends State<QuestionPage> {
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
-              child: Text("No"),
+              child: Text("Үгүй"),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.of(context).pop(true);
+                var predictedCharacter = await predictCharacter(X_test_custom);
+                print('Predicted Character: $predictedCharacter');
               },
-              child: Text("Yes"),
-            ),
-          ],
-        );
-      },
-    ).then((value) {
-      if (value != null && value) {
-        var predictedCharacter = predictCharacter(X_test_custom);
-        print('Predicted Character: $predictedCharacter');
-      }
-    });
-  }
-
-  void showIncompleteQuestionsDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Бүх асуултандаа хариулна уу!"),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); 
-              },
-              child: Text("OK"),
+              child: Text("Тийм"),
             ),
           ],
         );
       },
     );
   }
-  void printSelectedAnswers() {
-  print(selectedAnswers);
-}
+
+    void showIncompleteQuestionsDialog(BuildContext context) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Бүх асуултандаа хариулна уу!"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); 
+                },
+                child: Text("Ойлгосон"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+    void printSelectedAnswers() {
+    print(selectedAnswers);
+  }
 
   @override
   Widget build(BuildContext context) {

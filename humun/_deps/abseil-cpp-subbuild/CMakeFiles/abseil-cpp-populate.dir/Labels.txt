@@ -1,0 +1,14 @@
+# Target labels
+ abseil-cpp-populate
+# Source files and their labels
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/abseil-cpp-subbuild/CMakeFiles/abseil-cpp-populate
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/abseil-cpp-subbuild/CMakeFiles/abseil-cpp-populate.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/_deps/abseil-cpp-subbuild/CMakeFiles/abseil-cpp-populate-complete.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/abseil-cpp-populate-stamp/abseil-cpp-populate-build.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/abseil-cpp-populate-stamp/abseil-cpp-populate-configure.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/abseil-cpp-populate-stamp/abseil-cpp-populate-download.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/abseil-cpp-populate-stamp/abseil-cpp-populate-install.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/abseil-cpp-populate-stamp/abseil-cpp-populate-mkdir.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/abseil-cpp-populate-stamp/abseil-cpp-populate-patch.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/abseil-cpp-populate-stamp/abseil-cpp-populate-test.rule
+/Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/abseil-cpp-populate-stamp/abseil-cpp-populate-update.rule

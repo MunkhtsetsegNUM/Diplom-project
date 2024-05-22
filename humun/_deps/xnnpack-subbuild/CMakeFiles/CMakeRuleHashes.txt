@@ -1,0 +1,11 @@
+# Hashes of file build rules.
+62d702f88a3a02dd77e44ceacbe7b377 /Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-build
+227ee828335a981412eb6a3a3f858fb0 /Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-configure
+d3abc37290ca4ac5845a1c87458a20a3 /Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-download
+3a097761d7d0caab1fa60d636f463a75 /Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-install
+82beea88dbb13fcb96c83f39ddc9d5ab /Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-mkdir
+dd59da82b778d7181dbf3a382bdb5e83 /Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-patch
+b58741a3ad38b533bc0171fbf93ed3c6 /Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-test
+f46a920bb6753bdde86a534df5d95732 /Users/macbookpro/Desktop/Diploma/Diploma-project/humun/src/xnnpack-populate-stamp/xnnpack-populate-update
+025c53c073e68048c587ddc3f3b7ee7b CMakeFiles/xnnpack-populate
+331f0d17944cd419a546e45c2e57b8b8 CMakeFiles/xnnpack-populate-complete
